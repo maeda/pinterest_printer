@@ -3,6 +3,7 @@ from time import sleep
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from tqdm import tqdm
 
 
 def extract(url):
@@ -12,7 +13,7 @@ def extract(url):
     try:
         sleep(3)
         elem = driver.find_elements(By.TAG_NAME, 'img')
-        pin = [item for item in elem if item.get_attribute('class') == ""]
+        pin = [item for item in elem if 'originals' in item.get_attribute('src')]
         url = pin[0].get_attribute('src')
 
     finally:
@@ -48,7 +49,7 @@ if __name__ == "__main__":
         'https://pin.it/53EfAmi',
     ]
 
-    for url in urls:
+    for url in tqdm(urls):
         print(url)
         run(url)
 
